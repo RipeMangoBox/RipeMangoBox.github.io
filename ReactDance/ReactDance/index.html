@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+   <meta name="description"
+      content="ReactDance: A diffusion framework for reactive dance generation with hierarchical latent space, combining HFSQ and BLC methods for high-fidelity spatial expression and long-term temporal coherence.">
+
+   <title>ReactDance: Hierarchical Representation for High-Fidelity and Coherent Long-Form Reactive Dance Generation</title>
+   <meta property="og:title" content="ReactDance: Hierarchical Representation for High-Fidelity and Coherent Long-Form Reactive Dance Generation" />
+   <meta property="og:description" content="ReactDance: A diffusion framework for reactive dance generation with hierarchical latent space, combining HFSQ and BLC methods.">
+   
+   <!-- Bootstrap core CSS -->
+   <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+   <!-- Custom styles for this template -->
+   <link href="css/scrolling-nav.css" rel="stylesheet">
+   
+
+
+
+   <style>
+      /* Style to hide the video controls for a specific video with id="myVideo" */
+      /* video:not(#comparison)::-webkit-media-controls,
+      video:not(#comparison)::-webkit-media-controls-enclosure,
+      video:not(#comparison)::-webkit-media-controls-panel {
+         display: none !important;
+      } */
+      
+      /* Additional styling for ReactDance */
+      .section-title-tc {
+         text-align: center;
+         margin-bottom: 30px;
+         font-weight: bold;
+      }
+      
+      .subsection-title {
+         margin-top: 40px;
+         margin-bottom: 20px;
+         font-size: 1.5em;
+         font-weight: bold;
+      }
+      
+      .video-container {
+         width: 100%;
+         margin-bottom: 20px;
+         text-align: center;
+         overflow: visible !important; /* 确保控制栏不被遮挡 */
+      }
+      
+      .video-container video {
+         width: 100%;
+         max-width: none !important;
+         height: auto;
+         background: #000; /* 视频未加载时显示黑色背景 */
+      }
+
+      .img-container {
+         text-align: center;
+         margin: 20px 0;
+      }
+      
+      .img-container img {
+         width: 100%;
+         max-width: 800px;
+         height: auto;
+      }
+   </style>
+
+</head>
+
+<body id="page-top">
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"></script>
+   
+   <!-- Navigation -->
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+      <div class="container">
+         <a class="navbar-brand js-scroll-trigger" href="#page-top">ReactDance</a>
+         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive"
+            aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+         </button>
+         <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ms-auto">
+               <li class="nav-item">
+                  <a class="nav-link js-scroll-trigger" href="#about">Overview</a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link js-scroll-trigger" href="#method">Method</a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link js-scroll-trigger" href="#comparison">Comparison</a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link js-scroll-trigger" href="#more-results">More Results</a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link js-scroll-trigger" href="#pubs">Citataion</a>
+               </li>
+            </ul>
+         </div>
+      </div>
+   </nav>
+
+   <!-- Header -->
+   <header class="bg-light text-black">
+      <div class="container text-center">
+         <!-- Phone -->
+         <h1 class="d-md-none" style="font-size: 3.2em;">ReactDance</h1>
+         <h3 class="d-md-none">Hierarchical Representation for High-Fidelity and Coherent Long-Form Reactive Dance Generation</h3>
+
+         <!-- Laptop -->
+         <h1 class="d-none d-md-block">ReactDance</h1>
+         <h2 class="d-none d-md-block">Hierarchical Representation for High-Fidelity and Coherent Long-Form Reactive Dance Generation</h2>
+
+      <br>
+         <div class="section head">
+            <div class="d-none d-md-block authors">
+               <h6> 
+                  <a href="https://github.com/RipeMangoBox" target="_blank">Jingzhong Lin</a>, 
+                  Xinru Li, 
+                  Yuanyuan Qi, 
+                  Bohao Zhang, 
+                  Wenxiang Liu, 
+                  Kecheng Tang,
+               </h6>
+               <h6> 
+                  Wenxuan Huang, 
+                  Xiangfeng Xu, 
+                  Bangyan Li, 
+                  <a href="https://faculty.ecnu.edu.cn/_s16/wzb/main.psp" target="_blank">Changbo Wang</a>,
+                  <a href="https://faculty.ecnu.edu.cn/_s16/hgq2/main.psp" target="_blank">Gaoqi He</a><sup style="color: #0056b3;">&#9993;</sup>,
+               </h6> 
+               <h6> <a href="https://english.ecnu.edu.cn/" target="_blank">East China Normal University</a> </h6>
+            </div>
+
+            <div class="venue">
+               <h6>The Fourteenth International Conference on Learning Representations (<a href="https://iclr.cc/Conferences/2026" target="_blank">ICLR 2026</a>)<h6>
+            </div>
+
+            <!-- <p class="lead"><strong>TL;DR:</strong> <i>ReactDance is a diffusion framework for reactive dance generation that operates on a novel hierarchical latent space, combining HFSQ for high-fidelity spatial expression and BLC for efficient long-term coherent generation.</i>
+            </p> -->
+
+            <div class="downloads">
+
+               <br>
+               <h3>
+                  <a class="publink" href="#" target="_blank"
+                     style="text-decoration: none"> <i class="fa fa-print"></i> Paper </a> &nbsp;
+                  &nbsp;&nbsp;
+                  <a class="publink" href="#" target="_blank"
+                     style="text-decoration: none">
+                     <i class="fa fa-github"></i> Code(Comming Soon) </a>
+                  <h3>
+            </div>
+
+         </div>
+      </div>
+   </header>
+
+   <!-- About Section -->
+   <section id="about" class="about-section">
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-10 mx-auto">
+               <h2 class="section-title-tc">Overview</h2>
+               
+               <p class="lead text-justify">
+                  In this work, we introduce <b>ReactDance</b>, a novel diffusion framework operating on a hierarchical latent space. 
+                  Our approach tackles fine-grained spatial interactions challenge by disentangling coarse body postures from high-frequency motion dynamics through <b>Hierarchical Finite Scalar Quantization (HFSQ)</b>, 
+                  and ensures efficient, coherent long-form generation via a non-autoregressive <b>Blockwise Local Context (BLC)</b> sampling strategy. 
+               </p>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- Visualization Section -->
+   <section id="qualitative" class="">
+      <div class="container"> 
+         <div class="row">
+            <div class="col-lg-10 mx-auto">
+               <div class="video-container">
+                  <video width="100%" controls preload="metadata">
+                     <source src="../resources/Results/ReactDance.mp4" type="video/mp4">
+                  </video>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- Method Section -->
+   <section id="method" class="">
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-10 mx-auto">
+               <h2 class="section-title-tc">Method</h2>
+               
+               <!-- HFSQ Method -->
+               <h3 class="subsection-title">Hierarchical Finite Scalar Quantization (HFSQ)</h3>
+               <p class="lead">
+                  ReactDance proposes a multi-scale motion representation <b>HFSQ</b> that effectively disentangles coarse body posture from high-frequency dynamics.
+                  This further allows for a <b>layered guidance mechanism</b>, 
+                  enabling the model to prioritize global synchronization while maintaining high-fidelity spatial expression 
+                  in extremities, which is crucial for authentic reactive performances.
+               </p>
+               <div class="video-container">
+                  <video width="100%" playsinline="" autoplay="" loop="" muted="" controls="">
+                     <source src="../resources/Method/HFSQ_Method.mp4" type="video/mp4">
+                     Your browser does not support the video tag.
+                  </video>
+               </div>
+               
+               <!-- React Dance Pipeline -->
+               <h3 class="subsection-title">ReactDance Pipeline</h3>
+               <p class="lead">
+                  Overview of the complete ReactDance pipeline architecture.
+               </p>
+               <div class="img-container">
+                  <img src="../resources/Method/ReactDance Pipeline1.png" alt="ReactDance Pipeline">
+               </div>
+               
+               <!-- BLC Method -->
+               <h3 class="subsection-title">Coherent Parallel Sampling</h3>
+               <p class="lead">
+                  The coherent parallel sampling is enabled by the interplay between the Dense Sliding Window (DSW) training strategy and the Blockwise Local Context (BLC ) inference protocol.
+                  <br>
+                  <br>
+                  <b>Training: DSW Crosses Boundaries (Foundation of Continuity).</b> The HFSQ decoder is trained on thousands of overlapping windows that straddle the fixed boundaries used later in inference. This effectively trains the decoder to act as a robust "kinematic smoother" for boundary regions.
+                  <br>
+                  <br>
+                  <b>Inference: BLC Protocol (Local Fidelity with Global Consistency).</b> During inference, we generate blocks in parallel using <b>Periodic Causal Masking</b> (restricting attention to the local window) and <b>Phase-aligned Positional Encoding</b> (resetting temporal phase per block). While this protocol segments the attention context, cross-block continuity is effectively preserved by the DSW-trained decoder, which stitches the boundary latents of Block  and  into smooth transitions.
+               </p>
+               <div class="video-container">
+                  <video width="100%" playsinline="" autoplay="" loop="" muted="" controls="">
+                     <source src="../resources/Method/BLC_Method1.mp4" type="video/mp4">
+                     Your browser does not support the video tag.
+                  </video>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- Comparison Section -->
+   <section id="comparison" class="">
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-10 mx-auto">
+               <h2 class="section-title-tc">Comparison</h2>
+               
+               <p class="lead">
+                  Qualitative comparison with baselines.
+               </p>
+               <div class="video-container">
+                  <video width="100%" playsinline="" autoplay="" loop="" muted="" controls="">
+                     <source src="../resources/Qualitative Comparison.mp4" type="video/mp4">
+                     Your browser does not support the video tag.
+                  </video>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- More Results Section -->
+   <section id="more-results" class="">
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-10 mx-auto">
+               <h2 class="section-title-tc">More Results</h2>
+               
+               <!-- Diversity -->
+               <h3 class="subsection-title">Diversity</h3>
+               <p class="lead">
+                  ReactDance generates diverse dance movements for the same input leader motion and music.
+               </p>
+               <div class="video-container">
+                  <video width="100%" playsinline="" autoplay="" loop="" muted="" controls="">
+                     <source src="../resources/More Results/Diversity/long_coherent_diverse_generation.mp4" type="video/mp4">
+                     Your browser does not support the video tag.
+                  </video>
+               </div>
+               
+               <!-- HFSQ Layerwise Reconstruction -->
+               <h3 class="subsection-title">HFSQ Layerwise Reconstruction</h3>
+               <p class="lead">
+                  Visualization of HFSQ's multi-layer motion representation showing how different scales contribute to the final motion.
+               </p>
+               <div class="video-container">
+                  <video width="100%" playsinline="" autoplay="" loop="" muted="" controls="">
+                     <source src="../resources/More Results/HFSQ layerwise Recon/HFSQ_layerwise_reconstruction.mp4" type="video/mp4">
+                     Your browser does not support the video tag.
+                  </video>
+               </div>
+               
+               <!-- LDCFG -->
+               <h3 class="subsection-title">Layer-Decoupled Classifier-Free Guidance (LDCFG)</h3>
+               <p class="lead">
+                  During inference, LDCFG applies independent guidance strengths to each layer of the predicted latent. This strikes a more fine-grained control over high-frequency interaction details and the global kinematic structure.
+                  Since ReactDance use three independent HFSQs for upper limb motion, lower limb motion and relative root distance, LDCFG allows for separate control over the spatial expression of each body part, enabling more precise and customizable reactive dance generation.
+
+               </p>
+               <!-- <div class="video-container">
+                  <video width="100%" playsinline="" autoplay="" loop="" muted="" controls="">
+                     <source src="../resources/More Results/LDCFG/LDCFG_sampling_downhalf.mp4" type="video/mp4">
+                     Your browser does not support the video tag.
+                  </video>
+               </div> -->
+                              <!-- OOD Tabs -->
+               <nav>
+                  <div class="nav nav-tabs" id="LDCFG-tab" role="tablist">
+                     <button class="nav-item nav-link active" id="tab-LDCFG1" data-bs-toggle="tab"
+                        data-bs-target="#LDCFG-1" role="tab" type="button" aria-controls="tab-LDCFG1"
+                        aria-selected="true">Upper Limb</button>
+                     <button class="nav-item nav-link" id="tab-LDCFG2" data-bs-toggle="tab" data-bs-target="#LDCFG-2"
+                        role="tab" type="button" aria-controls="tab-LDCFG2" aria-selected="false">Lower Limb</button>
+                     <button class="nav-item nav-link" id="tab-LDCFG3" data-bs-toggle="tab" data-bs-target="#LDCFG-3"
+                        role="tab" type="button" aria-controls="tab-LDCFG3" aria-selected="false">Upper & Lower Limb</button>
+                     <button class="nav-item nav-link" id="tab-LDCFG4" data-bs-toggle="tab" data-bs-target="#LDCFG-4"
+                        role="tab" type="button" aria-controls="tab-LDCFG4" aria-selected="false">Global Movement</button>
+                  </div>
+               </nav>
+
+               <div class="tab-content" id="LDCFG-tabContent">
+                  <!-- LDCFG1: Upper Limb Spatial Alignment -->
+                  <div class="tab-pane fade show active" id="LDCFG-1" role="tabpanel" aria-labelledby="tab-LDCFG1">
+                     <div class="video-container" style="margin-top: 20px;">
+                        <video width="100%" playsinline="" autoplay="" loop="" muted="" controls="">
+                           <source src="../resources/More Results/LDCFG/up.mp4" type="video/mp4">
+                           Your browser does not support the video tag.
+                        </video>
+                     </div>
+                     <p class="lead" style="margin-top: 15px;">
+                        <b>LDCFG for upper limb motion.</b>
+                     </p>
+                  </div>
+                  
+                  <!-- LDCFG2: Synchronized Spinning -->
+                  <div class="tab-pane fade" id="LDCFG-2" role="tabpanel" aria-labelledby="tab-LDCFG2">
+                     <div class="video-container" style="margin-top: 20px;">
+                        <video width="100%" playsinline="" autoplay="" loop="" muted="" controls="">
+                           <source src="../resources/More Results/LDCFG/down.mp4" type="video/mp4">
+                           Your browser does not support the video tag.
+                        </video>
+                     </div>
+                     <p class="lead" style="margin-top: 15px;">
+                        <b>LDCFG for lower limb motion.</b>
+                     </p>
+                  </div>
+                  
+                  <!-- LDCFG3: Rhythmic Accompaniment -->
+                  <div class="tab-pane fade" id="LDCFG-3" role="tabpanel" aria-labelledby="tab-LDCFG3">
+                     <div class="video-container" style="margin-top: 20px;">
+                        <video width="100%" playsinline="" autoplay="" loop="" muted="" controls="">
+                           <source src="../resources/More Results/LDCFG/up_down.mp4" type="video/mp4">
+                           Your browser does not support the video tag.
+                        </video>
+                     </div>
+                     <p class="lead" style="margin-top: 15px;">
+                        <b>LDCFG for both upper and lower limb motion.</b>
+                     </p>
+                  </div>
+                  
+                  <!-- LDCFG4: Large Pose Adaptation -->
+                  <div class="tab-pane fade" id="LDCFG-4" role="tabpanel" aria-labelledby="tab-LDCFG4">
+                     <div class="video-container" style="margin-top: 20px;">
+                        <video width="100%" playsinline="" autoplay="" loop="" muted="" controls="">
+                           <source src="../resources/More Results/LDCFG/global_movement.mp4" type="video/mp4">
+                           Your browser does not support the video tag.
+                        </video>
+                     </div>
+                     <p class="lead" style="margin-top: 15px;">
+                        <b>LDCFG for limb motion and global movement.</b>
+                     </p>
+                  </div>
+               </div>
+               
+               <!-- Out-of-Distribution (OOD) -->
+               <h3 class="subsection-title">Out-of-Distribution (OOD) Generalization</h3>
+               <p class="lead">
+                  ReactDance's robustness on challenging out-of-distribution scenarios with different movement types and body dynamics. Here we present four representative OOD cases from <a href="https://github.com/li-ronghui/FineDance" target="_blank">FineDance Solo Dataset</a> that test the model's ability to generalize beyond the DD100 training set distribution, demonstrating its adaptability and robustness in generating coherent and high-fidelity reactive dance movements under diverse conditions.
+               </p>
+               
+               <!-- OOD Tabs -->
+               <nav>
+                  <div class="nav nav-tabs" id="ood-tab" role="tablist">
+                     <button class="nav-item nav-link active" id="tab-ood1" data-bs-toggle="tab"
+                        data-bs-target="#ood-1" role="tab" type="button" aria-controls="tab-ood1"
+                        aria-selected="true">Upper Limb Spatial Alignment</button>
+                     <button class="nav-item nav-link" id="tab-ood2" data-bs-toggle="tab" data-bs-target="#ood-2"
+                        role="tab" type="button" aria-controls="tab-ood2" aria-selected="false">Synchronized Spinning</button>
+                     <button class="nav-item nav-link" id="tab-ood3" data-bs-toggle="tab" data-bs-target="#ood-3"
+                        role="tab" type="button" aria-controls="tab-ood3" aria-selected="false">Rhythmic Accompaniment</button>
+                     <button class="nav-item nav-link" id="tab-ood4" data-bs-toggle="tab" data-bs-target="#ood-4"
+                        role="tab" type="button" aria-controls="tab-ood4" aria-selected="false">Large Pose Adaptation</button>
+                  </div>
+               </nav>
+               
+               <div class="tab-content" id="ood-tabContent">
+                  <!-- OOD1: Upper Limb Spatial Alignment -->
+                  <div class="tab-pane fade show active" id="ood-1" role="tabpanel" aria-labelledby="tab-ood1">
+                     <div class="video-container" style="margin-top: 20px;">
+                        <video width="100%" playsinline="" autoplay="" loop="" muted="" controls="">
+                           <source src="../resources/More Results/OOD/OOD1_UpperLimbSpatialAlignment.mp4" type="video/mp4">
+                           Your browser does not support the video tag.
+                        </video>
+                     </div>
+                     <p class="lead" style="margin-top: 15px;">
+                        <b>Upper Limb Spatial Alignment (OOD1):</b> ReactDance effectively generates precise upper limb movements that maintain spatial coherence with the leader's motion, even when the follower needs to execute fine-grained hand and arm placements.
+                     </p>
+                  </div>
+                  
+                  <!-- OOD2: Synchronized Spinning -->
+                  <div class="tab-pane fade" id="ood-2" role="tabpanel" aria-labelledby="tab-ood2">
+                     <div class="video-container" style="margin-top: 20px;">
+                        <video width="100%" playsinline="" autoplay="" loop="" muted="" controls="">
+                           <source src="../resources/More Results/OOD/OOD2_SynchronizedSpinning.mp4" type="video/mp4">
+                           Your browser does not support the video tag.
+                        </video>
+                     </div>
+                     <p class="lead" style="margin-top: 15px;">
+                        <b>Synchronized Spinning (OOD2):</b> Our method handles complex rotating movements, maintaining synchronization with the leader's motion while generating coordinated rotational dynamics for the follower.
+                     </p>
+                  </div>
+                  
+                  <!-- OOD3: Rhythmic Accompaniment -->
+                  <div class="tab-pane fade" id="ood-3" role="tabpanel" aria-labelledby="tab-ood3">
+                     <div class="video-container" style="margin-top: 20px;">
+                        <video width="100%" playsinline="" autoplay="" loop="" muted="" controls="">
+                           <source src="../resources/More Results/OOD/OOD3_Rhythmic%20Accompaniment.mp4" type="video/mp4">
+                           Your browser does not support the video tag.
+                        </video>
+                     </div>
+                     <p class="lead" style="margin-top: 15px;">
+                        <b>Rhythmic Accompaniment (OOD3):</b> ReactDance generates follower movements that are tightly synchronized with the music rhythm, creating coherent rhythmic accompaniment to the leader's dance.
+                     </p>
+                  </div>
+                  
+                  <!-- OOD4: Large Pose Adaptation -->
+                  <div class="tab-pane fade" id="ood-4" role="tabpanel" aria-labelledby="tab-ood4">
+                     <div class="video-container" style="margin-top: 20px;">
+                        <video width="100%" playsinline="" autoplay="" loop="" muted="" controls="">
+                           <source src="../resources/More Results/OOD/OOD4_Large%20Pose%28bending%29%20Adaptation.mp4" type="video/mp4">
+                           Your browser does not support the video tag.
+                        </video>
+                     </div>
+                     <p class="lead" style="margin-top: 15px;">
+                        <b>Large Pose Adaptation (OOD4):</b> Our method successfully adapts to significant body pose changes including deep bends and unusual postures, maintaining coherence and responsiveness to the leader's motion.
+                     </p>
+                  </div>
+               </div>
+               
+               <!-- Swap Duet -->
+               <h3 class="subsection-title">Swap Duet</h3>
+               <p class="lead">
+                  Demonstration of role swapping where the follower becomes the leader and vice versa, showing ReactDance's flexibility in handling different interaction patterns.
+               </p>
+               <div class="video-container">
+                  <video width="100%" playsinline="" autoplay="" loop="" muted="" controls="">
+                     <source src="../resources/More Results/swapduet/swap duet.mp4" type="video/mp4">
+                     Your browser does not support the video tag.
+                  </video>
+               </div>
+               
+               <!-- Hand Modeling -->
+               <h3 class="subsection-title">Hand Modeling</h3>
+               <p class="lead">
+                  Hand and finger dynamics for detailed hand-to-hand interactions in dance movements. Compared to Duolando, ReactDance achieves more aligned duet dance interaction.
+               </p>
+               <div class="video-container">
+                  <video width="100%" playsinline="" autoplay="" loop="" muted="" controls="">
+                     <source src="../resources/More Results/whand/Hand Modeling.mp4" type="video/mp4">
+                     Your browser does not support the video tag.
+                  </video>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- Publication Section -->
+   <section id="pubs" class="">
+      <div class="container">
+         <div class="row">
+            <div class="col-lg-10 mx-auto">
+               <h2 class="section-title-tc">Citation</h2>
+               <p>
+                  <b>BibTeX Citation:</b>
+               </p>
+               <pre style="display: block; background-color: #f5f5f5; border: 1px solid #ccc; border-radius: 4px">
+
+@inproceedings{
+   lin2026reactdance,
+   title={ReactDance: Hierarchical Representation for High-Fidelity and Coherent Long-Form Reactive Dance Generation},
+   author={Jingzhong Lin and Xinru Li and Yuanyuan Qi and Bohao Zhang and Wenxiang Liu and Kecheng Tang and Wenxuan Huang and Xiangfeng Xu and Bangyan Li and Changbo Wang and Gaoqi He},
+   booktitle={The Fourteenth International Conference on Learning Representations},
+   year={2026},
+   url={https://openreview.net/forum?id=FvMyAMbbX0}
+}
+               </pre>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <!-- Footer -->
+   <footer class="py-5 bg-dark">
+      <div class="container">
+         <p class="m-0 text-center text-white">Copyright &copy; 2026 Jingzhong Lin, Xinru Li, Yuanyuan Qi, Bohao Zhang, Wenxiang Liu, Kecheng Tang, Wenxuan Huang, Xiangfeng Xu, Bangyan Li, Changbo Wang, Gaoqi He</p>
+      </div>
+   </footer>
+
+   <!-- Bootstrap core JavaScript -->
+   <script src="vendor/jquery/jquery.min.js"></script>
+   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+   <!-- Plugin JavaScript -->
+   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+   <!-- Custom JavaScript for this theme -->
+   <script src="js/scrolling-nav.js"></script>
+   <!-- Bootstrap bundle -->
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+   <script src="./js/index.js"></script>
+</body>
+
+</html>
