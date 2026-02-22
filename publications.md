@@ -3,8 +3,8 @@ Authors: <b>Jingzhong Lin</b>, Xinru Li, Yuanyuan Qi, Bohao Zhang, Wenxiang Liu,
 Publication: ICLR 2026
 TL;DR: ReactDance is a reactive dance diffusion framework that enables fine-grained duet interaction via hierarchical latent representations and ensures long-term coherence through a novel inference-training temporal alignment.
 Cover: Jingzhong Lin/resources/ReactDance_ICLR2026.mp4
-Project Page: https://github.com/RipeMangoBox/RipeMangoBox
-Code: https://github.com/RipeMangoBox/RipeMangoBox
+Project Page: ./ReactDance/index.html
+Code: https://github.com/RipeMangoBox/ReactDance
 Paper: https://openreview.net/forum?id=FvMyAMbbX0&referrer=%5BAuthor%20Console%5D(%2Fgroup%3Fid%3DICLR.cc%2F2026%2FConference%2FAuthors%23your-submissions)
 Bibtex: 
 ```
