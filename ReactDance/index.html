@@ -20,7 +20,6 @@
    
 
 
-
    <style>
       /* Style to hide the video controls for a specific video with id="myVideo" */
       /* video:not(#comparison)::-webkit-media-controls,
@@ -110,52 +109,71 @@
    <header class="bg-light text-black">
       <div class="container text-center">
          <!-- Phone -->
-         <h1 class="d-md-none" style="font-size: 3.2em;">ReactDance</h1>
-         <h3 class="d-md-none">Hierarchical Representation for High-Fidelity and Coherent Long-Form Reactive Dance Generation</h3>
+         <!-- Phone -->
+         <h1 class="d-md-none" style="font-size: 2.1em;">ReactDance</h1>
+         <h3 class="d-md-none" style="font-size: 1.15em; word-break:keep-all; white-space:normal;">
+            Hierarchical Representation for High-Fidelity and Coherent Long-Form Reactive Dance Generation
+         </h3>
 
          <!-- Laptop -->
-         <h1 class="d-none d-md-block">ReactDance</h1>
-         <h2 class="d-none d-md-block">Hierarchical Representation for High-Fidelity and Coherent Long-Form Reactive Dance Generation</h2>
+         <h1 class="d-none d-md-block" style="font-size: 3.4em;">ReactDance</h1>
+         <h2 class="d-none d-md-block" style="font-size: 2.4em; word-break:keep-all; white-space:normal;">
+            Hierarchical Representation for High-Fidelity and Coherent Long-Form Reactive Dance Generation
+         </h2>
 
       <br>
          <div class="section head">
-            <div class="d-none d-md-block authors">
-               <h6> 
-                  <a href="https://github.com/RipeMangoBox" target="_blank">Jingzhong Lin</a>, 
-                  Xinru Li, 
-                  Yuanyuan Qi, 
-                  Bohao Zhang, 
-                  Wenxiang Liu, 
-                  Kecheng Tang,
-               </h6>
-               <h6> 
-                  Wenxuan Huang, 
-                  Xiangfeng Xu, 
-                  Bangyan Li, 
-                  <a href="https://faculty.ecnu.edu.cn/_s16/wzb/main.psp" target="_blank">Changbo Wang</a>,
-                  <a href="https://faculty.ecnu.edu.cn/_s16/hgq2/main.psp" target="_blank">Gaoqi He</a><sup style="color: #0056b3;">&#9993;</sup>,
-               </h6> 
-               <h6> <a href="https://english.ecnu.edu.cn/" target="_blank">East China Normal University</a> </h6>
+            <!-- Authors (desktop view) -->
+            <div class="authors d-none d-md-flex justify-content-center flex-wrap mb-2" style="gap: 0.5em; font-size: 1.0em;">
+               <span>
+                  <a href="https://ripemangobox.github.io/" target="_blank" style="color:#0056b3;">Jingzhong Lin</a>
+               </span>
+               <span>Xinru Li</span>
+               <span>Yuanyuan Qi</span>
+               <span>Bohao Zhang</span>
+               <span>Wenxiang Liu</span>
+               <span>Kecheng Tang</span>
+               <span>Wenxuan Huang</span>
+               <span>Xiangfeng Xu</span>
+               <span>Bangyan Li</span>
+               <span>
+                  <a href="https://faculty.ecnu.edu.cn/_s16/wzb/main.psp" target="_blank" style="color:#0056b3;">Changbo Wang</a>
+               </span>
+               <span>
+                  <a href="https://faculty.ecnu.edu.cn/_s16/hgq2/main.psp" target="_blank" style="color:#0056b3;">
+                     Gaoqi He<sup style="color: #0056b3;">&#9993;</sup>
+                  </a>
+               </span>
             </div>
 
-            <div class="venue">
-               <h6>The Fourteenth International Conference on Learning Representations (<a href="https://iclr.cc/Conferences/2026" target="_blank">ICLR 2026</a>)<h6>
+            <div class="authors d-block d-md-none small mb-3">
+               <span>
+                  <a href="https://github.com/RipeMangoBox" target="_blank" style="color:#0056b3;">Jingzhong Lin</a>,
+                  Xinru Li, Yuanyuan Qi, Bohao Zhang, Wenxiang Liu, Kecheng Tang, Wenxuan Huang, Xiangfeng Xu, Bangyan Li,
+                  <a href="https://faculty.ecnu.edu.cn/_s16/wzb/main.psp" target="_blank" style="color:#0056b3;">Changbo Wang</a>,
+                  <a href="https://faculty.ecnu.edu.cn/_s16/hgq2/main.psp" target="_blank" style="color:#0056b3;">Gaoqi He<sup style="color: #0056b3;">&#9993;</sup></a>
+               </span>
+            </div>
+            <div class="institution mb-4">
+               <a href="https://english.ecnu.edu.cn/" target="_blank" style="font-weight: 500; color: #1772d0; letter-spacing: .02em;">East China Normal University</a>
             </div>
 
-            <!-- <p class="lead"><strong>TL;DR:</strong> <i>ReactDance is a diffusion framework for reactive dance generation that operates on a novel hierarchical latent space, combining HFSQ for high-fidelity spatial expression and BLC for efficient long-term coherent generation.</i>
-            </p> -->
+            <div class="venue mb-4">
+               <span style="font-size:1.5em;">
+                  The Fourteenth International Conference on Learning Representations (
+                  <a href="https://iclr.cc/Conferences/2026" target="_blank" style="color:#205070;text-decoration: underline;">ICLR 2026</a>
+                  )
+               </span>
+            </div>
 
-            <div class="downloads">
-
-               <br>
-               <h3>
-                  <a class="publink" href="#" target="_blank"
-                     style="text-decoration: none"> <i class="fa fa-print"></i> Paper </a> &nbsp;
-                  &nbsp;&nbsp;
-                  <a class="publink" href="#" target="_blank"
-                     style="text-decoration: none">
-                     <i class="fa fa-github"></i> Code(Comming Soon) </a>
-                  <h3>
+            <!-- Action buttons -->
+            <div class="downloads d-flex justify-content-center align-items-center gap-3 mt-3 flex-wrap">
+               <a class="btn btn-outline-primary mx-2 mb-2" href="https://arxiv.org/abs/2505.05589" target="_blank" style="min-width:120px;">
+                  <i class="fa fa-print mr-2"></i> Paper
+               </a>
+               <a class="btn btn-outline-success mx-2 mb-2" href="https://github.com/RipeMangoBox/ReactDance?tab=readme-ov-file" target="_blank" style="min-width:120px;">
+                  <i class="fa fa-github mr-2"></i> Code
+               </a>
             </div>
 
          </div>
