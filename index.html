@@ -22,6 +22,42 @@
     .publication-table { width: 100%; border: 0; border-spacing: 0; border-collapse: separate; margin-bottom: 30px; }
     .publication-table td { padding: 20px; vertical-align: middle; }
     .paper-media { width: 100%; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    .project-media-card {
+      width: 100%;
+      min-height: 150px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      background: linear-gradient(135deg, #0f172a, #1e293b 55%, #334155);
+      padding: 18px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #e2e8f0;
+    }
+    .project-media-badge {
+      display: inline-block;
+      width: fit-content;
+      font-size: 11px;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.18);
+      color: #cbd5e1;
+    }
+    .project-media-title {
+      font-size: 26px;
+      font-weight: 700;
+      line-height: 1.1;
+      color: #f8fafc;
+      margin-top: 10px;
+    }
+    .project-media-subtitle {
+      font-size: 12px;
+      color: #cbd5e1;
+      margin-top: 6px;
+    }
     .profile-photo { width: 100%; max-width: 220px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     heading { font-size: 24px; font-weight: 600; display: block; margin: 40px 0 10px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
   </style>
@@ -188,6 +224,34 @@
     </tbody>
   </table>
 
+
+  <heading>Open Source Projects</heading>
+  <table class="publication-table">
+    <tbody>
+      <tr>
+        <td style="width:32%;">
+          <div class="project-media-card" aria-label="ResearchFlow project cover">
+            <span class="project-media-badge">Open Source</span>
+            <div>
+              <div class="project-media-title">ResearchFlow</div>
+              <div class="project-media-subtitle">Local Knowledge Workflow</div>
+            </div>
+          </div>
+        </td>
+        <td>
+          <a href="https://github.com/RipeMangoBox/ResearchFlow" target="_blank" rel="noopener">
+            <papertitle>ResearchFlow: Semi-automated Local Research Knowledge Base and Research Assistant</papertitle>
+          </a>
+          <br>
+          <strong>Maintainer:</strong> Jingzhong Lin
+          <br>
+          <div class="box"><a href="https://github.com/RipeMangoBox/ResearchFlow" target="_blank" rel="noopener"><i class="fa fa-github"></i> Repository</a></div>
+          <div class="box"><a href="https://github.com/RipeMangoBox/ResearchFlow/blob/main/README_ZN.md" target="_blank" rel="noopener"><i class="fa fa-book"></i> Docs (ZH)</a></div>
+          <p style="font-size: 15px; margin-top: 10px;">ResearchFlow is an open-source workflow for building a local, reusable research knowledge base and connecting it with AI-assisted ideation, coding, and writing workflows.</p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 
   <heading>Academic Service</heading>
   <div class="service-item">
