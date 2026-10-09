@@ -60,7 +60,7 @@ class Gallery {
     v.addEventListener('waiting',()=>{if(this.playing){this.pause();this.status.textContent='Buffering — press Play all to resume together.';}});
     v.addEventListener('ended',()=>{if(this.playing){this.pause();this.updateTimeline();this.status.textContent='Playback finished';}});
     v.addEventListener('error',()=>{this.status.textContent='A video could not load. Please reload or try another example.';});
-    this.videos.push(v);wrap.append(v);f.append(wrap);
+    this.videos.push(v);if(label==='Projection'){const frame=el('div','film-frame');frame.append(v);wrap.append(frame);}else{wrap.append(v);}f.append(wrap);
    });grid.append(f);
   });this.root.append(grid);
   const playback=el('div','playback');this.status=el('span','','');this.status.setAttribute('role','status');this.playButton=button('Play all',()=>this.playing?this.pause():this.play());const reset=button('Restart',()=>this.play(true));this.timeline=el('input','group-timeline');this.timeline.type='range';this.timeline.min=0;this.timeline.max=1;this.timeline.step=0.01;this.timeline.value=0;this.timeline.disabled=true;this.timeline.setAttribute('aria-label','Seek all videos in this sample');this.timeline.addEventListener('input',()=>this.seek(Number(this.timeline.value)));this.clock=el('output','group-clock','0.0 s');playback.append(this.playButton,reset,this.timeline,this.clock,this.status);this.root.append(playback);

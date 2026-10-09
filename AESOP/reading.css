@@ -21,3 +21,9 @@ body.layout-left{padding-top:0;padding-left:230px}.layout-left .nav{inset:0 auto
 @media(max-width:760px){.external-sample .prompts{padding:10px;font-size:11px;min-height:0}.prompts b{display:block}.external-sample .playback{gap:6px}.external-sample .playback button{padding:5px 8px;font-size:11px}}
 
 .net-displacement{display:block;font-size:11px;font-weight:400;color:var(--muted);margin-top:4px}.external-intensity .video-grid{grid-template-columns:repeat(var(--columns),minmax(0,1fr))}@media(max-width:760px){.net-displacement{font-size:10px}.external-intensity .video-grid{grid-template-columns:repeat(var(--columns),minmax(0,1fr))}}
+
+/* Projection: restrained film perforations, outside the original image. */
+.film-frame{position:relative;width:100%;padding:6px 0;background:#202323;border-radius:2px;overflow:hidden;}
+.film-frame::before,.film-frame::after{content:"";position:absolute;left:4px;right:4px;height:3px;background:repeating-linear-gradient(90deg,#f8f8f5 0 5px,transparent 5px 12px);pointer-events:none;}
+.film-frame::before{top:1.5px;}.film-frame::after{bottom:1.5px;}
+.gallery .video-cell .film-frame video{border:0;border-radius:0;}
