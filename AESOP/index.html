@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<link rel="canonical" href="https://ripemangobox.github.io/AESOP/">
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="AESOP: Asymmetric Human–Camera Generation with Translation-Intensity Control. An independent human pathway and one shared camera generator.">
+<title>AESOP — Human–Camera Generation</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="reading.css?v=20261009-public-v1">
+<script src="navigation.js" defer></script>
+<script src="data.js?v=20261009-public-v1" defer></script><script src="app.js?v=20261009-public-v1" defer></script>
+</head>
+<body>
+<a class="skip" href="#overview">Skip to content</a>
+<nav class="nav" aria-label="Main navigation"><a class="wordmark" href="#">AESOP</a><button class="menu-toggle" aria-expanded="false" aria-controls="contents-links">Contents ☰</button><div id="contents-links"><a href="#overview"><span class="toc-number">01</span>Overview</a><a href="#demo"><span class="toc-number">02</span>Demo</a><a href="#method"><span class="toc-number">03</span>Method</a><a href="#comparison"><span class="toc-number">04</span>Comparisons</a><a href="#intensity"><span class="toc-number">05</span>Intensity control</a><a href="#external"><span class="toc-number">06</span>External examples</a><a href="#citation"><span class="toc-number">07</span>Citation</a></div></nav>
+
+<header class="hero">
+
+<h1>AESOP</h1><h2>Asymmetric Human–Camera Generation<br class="desktop"> with Translation-Intensity Control</h2>
+<div class="authors">
+<span>Jingzhong Lin<sup>1,*</sup></span><span>Zhanke Wang<sup>2</sup></span><span>Heng Li<sup>3</sup></span><span>Wenxiang Liu<sup>1</sup></span><br class="desktop">
+<span>Zhao Zhang<sup>1</sup></span><span>Kecheng Tang<sup>1</sup></span><span>Dongdong Xiang<sup>1</sup></span><span>Changbo Wang<sup>1</sup></span><br class="desktop">
+<span>Di Kang<sup>4</sup></span><span>Chunchao Guo<sup>4</sup></span><span>Linchao Bao<sup>4</sup></span><span>Gaoqi He<sup>1,†</sup></span>
+</div>
+<p class="affiliations"><span><sup>1</sup> East China Normal University</span><span><sup>2</sup> Peking University</span><span><sup>3</sup> Sun Yat-sen University</span><span><sup>4</sup> Tencent</span></p>
+<p class="notes">* Work completed during an internship at Tencent. &nbsp; † Corresponding author.</p>
+<div class="links"><a class="primary" href="https://arxiv.org/abs/2609.37229">Paper <span>↗</span></a><a href="https://github.com/RipeMangoBox/AESOP">Code <small>coming soon</small> <span>↗</span></a><a href="#demo">Demo <span>↓</span></a></div>
+<div class="layout-switch" role="group" aria-label="Navigation layout"><span>Navigation</span><button data-layout="top" aria-pressed="true">Top</button><button data-layout="left" aria-pressed="false">Left</button></div>
+</header>
+<main>
+<section id="overview" class="teaser section">
+<div class="tldr"><span class="tldr-label">In brief</span><p>AESOP uses an asymmetric Human-first architecture to unify Camera generation from given Human motion and joint Human–Camera generation, while preserving Human motion and enabling explicit control over Camera translation intensity.</p></div>
+<figure><img src="assets/images/teaser.png" width="2400" height="1424" alt="AESOP generates camera trajectories given human motion, jointly generates humans and cameras, and controls camera translation intensity."></figure>
+
+</section>
+<section id="demo" class="section"><div class="section-heading"><h2>Demo</h2></div>
+<video id="demo-video" class="demo-video" controls playsinline preload="none" poster="assets/images/demo-poster.jpg?v=first-frame-v9" width="1920" height="1080"><source src="assets/media/demo.mp4?v=title-restored" type="video/mp4"><track kind="captions" src="assets/media/demo.en.vtt?v=title-restored" srclang="en" label="English">Your browser does not support video playback.</video>
+<div class="chapters" aria-label="Video chapters"><button data-time="0">Overview</button><button data-time="53.9">Method</button><button data-time="164.667">Comparisons</button><button data-time="231.6">Intensity</button><button data-time="261.9">External examples</button></div>
+</section>
+<section id="method" class="section"><div class="section-heading"><h2>Method</h2><p>An independent human generator and a shared, human-conditioned camera generator.</p></div><img class="pipeline" src="assets/images/pipeline.png" width="2654" height="1362" loading="lazy" alt="AESOP pipeline showing asymmetric human and camera representations, independent human flow, and shared camera flow with translation-intensity conditioning."></section>
+<section id="comparison" class="section"><div class="section-heading"><h2>Comparisons</h2></div><div id="comparison-gallery" class="gallery" data-categories="comparison-given,comparison-joint"></div></section>
+<section id="intensity" class="section"><div class="section-heading"><h2>Intensity Control</h2><p>Vary camera travel with intensity <i>a</i>. Human motion, camera text, and noise are shared.</p></div><div id="intensity-gallery" class="gallery" data-categories="intensity-given,intensity-joint"></div></section>
+<section id="external" class="section"><div class="section-heading"><h2>External Examples</h2><p>Trained on PulpMotion. Applied to HumanML3D and HY-Motion.</p></div><div id="external-gallery" class="gallery" data-categories="ood-hml3d-given,ood-hml3d-joint,ood-hymotion-given"></div></section>
+<section id="citation" class="section citation"><div class="section-heading"><h2>BibTeX</h2></div><button id="copy-citation" class="copy">Copy BibTeX</button><pre><code id="bibtex">@article{lin2026aesop,
+  title={AESOP: Asymmetric Human-Camera Generation with Translation-Intensity Control},
+  author={Lin, Jingzhong and Wang, Zhanke and Li, Heng and Liu, Wenxiang
+    and Zhang, Zhao and Tang, Kecheng and Xiang, Dongdong and Wang, Changbo
+    and Kang, Di and Guo, Chunchao and Bao, Linchao and He, Gaoqi},
+  journal={arXiv preprint arXiv:2609.37229},
+  year={2026},
+  url={https://arxiv.org/abs/2609.37229}
+}</code></pre><span id="copy-status" role="status"></span></section>
+</main>
+</body></html>

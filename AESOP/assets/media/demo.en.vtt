@@ -1,0 +1,172 @@
+WEBVTT
+
+00:00:00.450 --> 00:00:06.465
+We present AESOP: asymmetric human-camera generation with translation-intensity control.
+
+00:00:08.450 --> 00:00:12.386
+Given a human motion, AESOP generates its camera trajectory.
+
+00:00:12.636 --> 00:00:16.595
+For joint generation, it creates the human first, then the camera.
+
+00:00:16.826 --> 00:00:22.985
+Both tasks share one camera generator, with explicit control over how far the camera travels.
+
+00:00:25.450 --> 00:00:27.433
+Two observations motivate this design.
+
+00:00:27.683 --> 00:00:32.386
+Human motion defines the action; the camera determines how that action is presented.
+
+00:00:32.636 --> 00:00:34.053
+Their roles are asymmetric.
+
+00:00:34.710 --> 00:00:42.688
+Second, human motion provides the visual focus and camera text describes the movement, but the amount of camera travel remains underspecified.
+
+00:00:42.938 --> 00:00:47.804
+In the baseline example shown here, the weaker and stronger prompts produce similar displacement.
+
+00:00:48.054 --> 00:00:53.247
+We therefore model the dependency explicitly and learn intensity from geometric pairs.
+
+00:00:54.350 --> 00:00:55.789
+Here is the core idea.
+
+00:00:57.350 --> 00:01:01.573
+We first train a human encoder and decoder using human motion alone.
+
+00:01:01.823 --> 00:01:05.001
+The decoder reconstructs the motion from the human latent.
+
+00:01:07.550 --> 00:01:11.432
+We then freeze the human branch and train the camera representation.
+
+00:01:11.682 --> 00:01:18.114
+The camera decoder combines camera and human latents, using the action as context for reconstruction.
+
+00:01:21.717 --> 00:01:29.961
+This separation lets us encode a supplied motion without a camera trajectory, while still giving camera reconstruction access to the human action.
+
+00:01:31.717 --> 00:01:36.664
+Generative training follows the same human-first order as reconstruction training.
+
+00:01:36.914 --> 00:01:44.349
+We train a text-conditioned human flow to generate motion latents from noise, then freeze it before training the camera flow.
+
+00:01:45.450 --> 00:01:49.929
+We train the camera model on latents encoded from ground-truth human motion.
+
+00:01:50.179 --> 00:01:56.468
+At inference, supplied motions are encoded, while joint generation reuses the completed human latent.
+
+00:01:56.718 --> 00:01:59.458
+Both routes use the same camera flow and decoder.
+
+00:02:00.617 --> 00:02:04.263
+Direction-paired augmentation provides auxiliary supervision.
+
+00:02:04.513 --> 00:02:09.493
+We first select truck or dolly events with consistent direction and sufficient travel.
+
+00:02:09.743 --> 00:02:15.651
+We then construct opposite-direction trajectories and matching directional text for the same human motion.
+
+00:02:15.901 --> 00:02:20.153
+Finally, we retain pairs that pass geometry and reconstruction checks.
+
+00:02:21.283 --> 00:02:28.589
+Intensity-paired augmentation creates weaker and stronger camera trajectories with the same human motion and camera text.
+
+00:02:28.839 --> 00:02:33.605
+The construction scales smooth displacement without amplifying residual jitter.
+
+00:02:33.855 --> 00:02:41.000
+Geometry and reconstruction checks select the training pairs, which teach the model to respond to the intensity condition.
+
+00:02:42.117 --> 00:02:43.800
+We now examine the results.
+
+00:02:45.117 --> 00:02:47.353
+First, given-human camera generation.
+
+00:02:47.603 --> 00:02:50.429
+Each comparison uses the same supplied motion.
+
+00:02:50.679 --> 00:02:58.027
+In these examples, AESOP more closely follows the requested camera movement while maintaining clearer framing of the human action.
+
+00:03:01.550 --> 00:03:04.835
+The next example shows the same task with a different action.
+
+00:03:19.550 --> 00:03:23.876
+Next, joint human–camera generation starts from human and camera text.
+
+00:03:24.126 --> 00:03:29.874
+AESOP generates the action first, then conditions the camera trajectory on the completed motion.
+
+00:03:35.050 --> 00:03:38.410
+Here, both the action and camera trajectory are generated.
+
+00:03:52.050 --> 00:03:57.817
+Now we vary translation intensity while fixing the human motion, camera text, and camera noise.
+
+00:03:58.067 --> 00:04:02.833
+Camera travel increases across the five settings shown in these synchronized views.
+
+00:04:07.750 --> 00:04:12.837
+In joint generation, we use the same generated human motion at every intensity.
+
+00:04:13.087 --> 00:04:17.791
+Each setting regenerates the camera trajectory, changing its travel and framing.
+
+00:04:22.350 --> 00:04:27.458
+We next test the same model with motions and action descriptions from external sources.
+
+00:04:27.708 --> 00:04:35.237
+First, we adapt HumanML3D motions to AESOP’s representation and use them to condition camera generation.
+
+00:04:36.350 --> 00:04:42.452
+Here, we use an action description from HumanML3D instead of supplying the motion itself.
+
+00:04:42.702 --> 00:04:46.648
+AESOP generates both the human motion and the camera trajectory.
+
+00:04:48.350 --> 00:04:52.996
+Finally, we use human motions generated by HY-Motion as input.
+
+00:04:53.246 --> 00:04:58.813
+AESOP combines these motions with camera text to generate a camera trajectory for each motion.
+
+00:05:01.950 --> 00:05:04.767
+Reconstruction tests the representation itself.
+
+00:05:05.017 --> 00:05:15.447
+Compared with the symmetric PulpMotion representation, AESOP more closely recovers camera distribution and alignment, with lower human position and camera translation errors.
+
+00:05:15.697 --> 00:05:19.088
+These results support our human-first asymmetric design.
+
+00:05:20.217 --> 00:05:26.851
+For generation, AESOP achieves lower camera-distribution and framing-distribution distances in both tasks.
+
+00:05:27.101 --> 00:05:38.151
+Given-human projection-distribution distance is about fifty percent lower than DIRECTOR-C, and joint camera-distribution distance is about eighty-seven percent lower than PulpMotion DiT.
+
+00:05:39.283 --> 00:05:45.885
+These rows compare original-pair training, direction-pair continuation, and the final intensity-pair stage.
+
+00:05:46.135 --> 00:05:54.059
+Camera-distribution distance decreases across the stages, while the final model also supports the intensity control shown earlier.
+
+00:05:55.183 --> 00:05:59.471
+Learning from geometric pairs gives explicit translation-intensity control.
+
+00:05:59.780 --> 00:06:04.706
+AESOP unifies both tasks through an independent human pathway and a shared camera generator.
+
+00:06:09.183 --> 00:06:10.109
+Thank you.
+
+00:06:10.359 --> 00:06:15.733
+We hope AESOP inspires further work on controllable human-aware camera generation.
