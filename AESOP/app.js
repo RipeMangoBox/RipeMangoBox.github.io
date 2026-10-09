@@ -17,8 +17,12 @@ function el(tag,cls,text){const x=document.createElement(tag);if(cls)x.className
 function button(text,action){const b=el('button','',text);b.type='button';b.addEventListener('click',action);return b;}
 class Gallery {
  constructor(root,options={}){this.root=root;this.keys=root.dataset.categories.split(',');this.key=this.keys[0];this.index=options.index||0;this.embedded=!!options.embedded;this.hideTabs=!!options.hideTabs;this.group=options.group;this.generation=0;this.render();}
- pause(){this.generation++;this.videos?.forEach(v=>v.pause());if(this.playButton)this.playButton.textContent='Play all';if(this.playing&&this.status)this.status.textContent='Paused';this.playing=false;}
- async play(){
+ pause(){cancelAnimationFrame(this.syncFrame);this.generation++;this.videos?.forEach(v=>v.pause());if(this.playButton)this.playButton.textContent='Play all';if(this.playing&&this.status)this.status.textContent='Paused';this.playing=false;}
+ duration(){return Math.min(...this.videos.map(v=>v.duration).filter(Number.isFinite));}
+ updateTimeline(){const d=this.duration(),t=this.videos[0]?.currentTime||0;if(this.timeline&&Number.isFinite(d)){this.timeline.disabled=false;this.timeline.max=d;this.timeline.value=t;this.clock.textContent=`${t.toFixed(1)} / ${d.toFixed(1)} s`;}}
+ sync(){if(!this.playing)return;const t=this.videos[0].currentTime,d=this.duration();if(t>=d-0.04){this.pause();this.status.textContent="Playback finished";this.updateTimeline();return;}this.videos.slice(1).forEach(v=>{if(!v.seeking&&Math.abs(v.currentTime-t)>0.08)v.currentTime=t;});this.updateTimeline();this.syncFrame=requestAnimationFrame(()=>this.sync());}
+ seek(t){this.pause();this.videos.forEach(v=>{if(Number.isFinite(v.duration))v.currentTime=Math.min(t,v.duration);});this.updateTimeline();}
+ async play(restart=false){
   this.pause();galleries.filter(g=>g!==this&&(!this.group||g.group!==this.group)).forEach(g=>g.pause());document.querySelector('#demo-video').pause();
   const token=this.generation;this.playButton.textContent='Loading…';
   try{
@@ -26,14 +30,14 @@ class Gallery {
     const timeout=setTimeout(()=>{cleanup();reject(new Error('timeout'));},15000);
     const cleanup=()=>{clearTimeout(timeout);v.removeEventListener('canplay',ok);v.removeEventListener('error',bad);};
     const ok=()=>{cleanup();resolve();};const bad=()=>{cleanup();reject(new Error('media'));};
-    v.addEventListener('canplay',ok);v.addEventListener('error',bad);v.load();
+    v.addEventListener('canplay',ok);v.addEventListener('error',bad);if(v.readyState===0)v.load();
    })));
    if(token!==this.generation)return;
-   this.videos.forEach(v=>v.currentTime=0);
+   const target=restart||this.videos[0].ended?0:this.videos[0].currentTime;this.videos.forEach(v=>v.currentTime=target);
    await Promise.all(this.videos.map(v=>v.play()));
    if(token!==this.generation){this.videos.forEach(v=>v.pause());return;}
-   this.playing=true;this.playButton.textContent='Pause all';this.status.textContent='Playing together';
-  }catch(e){if(token===this.generation){this.pause();this.status.textContent='Playback could not start. Use the individual video controls to retry.';}}
+   this.playing=true;this.playButton.textContent='Pause all';this.status.textContent='Playing together';this.sync();
+  }catch(e){if(token===this.generation){this.pause();this.status.textContent='Playback could not start. Press Play all to retry.';}}
  }
  render(){
   this.pause();this.root.replaceChildren();if(!this.embedded&&!this.hideTabs){const tabs=el('div','tabs');tabs.setAttribute('aria-label','Example categories');
@@ -50,14 +54,16 @@ class Gallery {
    const f=el('figure','video-cell');const caption=el('figcaption','',m.name);if(Number.isFinite(m.net_displacement_m))caption.append(el('span','net-displacement',`Net displacement: ${m.net_displacement_m.toFixed(2)} m`));f.append(caption);
    ['Global','Projection'].forEach(label=>{
     const view=m.views.find(v=>v.label===label);const wrap=el('div','view-panel');wrap.append(el('span','view-label',label));
-    const v=el('video');v.controls=true;v.muted=true;v.playsInline=true;v.preload='none';v.poster=view.poster;v.src=view.payload;
+    const v=el('video');v.controls=false;v.disablePictureInPicture=true;v.muted=true;v.playsInline=true;v.preload='none';v.poster=view.poster;v.src=view.payload;
     v.setAttribute('aria-label',`${m.name}, ${label.toLowerCase()} view, example ${this.index+1}`);
-    v.addEventListener('ended',()=>{if(this.playing&&this.videos.every(video=>video.ended)){this.pause();this.status.textContent='Playback finished';}});
+    v.addEventListener('loadedmetadata',()=>this.updateTimeline());
+    v.addEventListener('waiting',()=>{if(this.playing){this.pause();this.status.textContent='Buffering — press Play all to resume together.';}});
+    v.addEventListener('ended',()=>{if(this.playing){this.pause();this.updateTimeline();this.status.textContent='Playback finished';}});
     v.addEventListener('error',()=>{this.status.textContent='A video could not load. Please reload or try another example.';});
     this.videos.push(v);wrap.append(v);f.append(wrap);
    });grid.append(f);
   });this.root.append(grid);
-  const playback=el('div','playback');this.status=el('span','','');this.status.setAttribute('role','status');this.playButton=button('Play all',()=>this.playing?this.pause():this.play());const reset=button('Restart',()=>this.play());playback.append(this.status,this.playButton,reset);this.root.append(playback);
+  const playback=el('div','playback');this.status=el('span','','');this.status.setAttribute('role','status');this.playButton=button('Play all',()=>this.playing?this.pause():this.play());const reset=button('Restart',()=>this.play(true));this.timeline=el('input','group-timeline');this.timeline.type='range';this.timeline.min=0;this.timeline.max=1;this.timeline.step=0.01;this.timeline.value=0;this.timeline.disabled=true;this.timeline.setAttribute('aria-label','Seek all videos in this sample');this.timeline.addEventListener('input',()=>this.seek(Number(this.timeline.value)));this.clock=el('output','group-clock','0.0 s');playback.append(this.playButton,reset,this.timeline,this.clock,this.status);this.root.append(playback);
  }
 }
 document.querySelectorAll('.gallery:not(#external-gallery)').forEach(root=>galleries.push(new Gallery(root)));
