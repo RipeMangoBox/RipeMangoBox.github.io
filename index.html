@@ -26,6 +26,31 @@
     .project-media { width: auto; max-width: 100%; height: 150px; object-fit: contain; display: block; margin: 0 auto; }
     .profile-photo { width: 100%; max-width: 220px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
     heading { font-size: 24px; font-weight: 600; display: block; margin: 40px 0 10px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+  
+    .publication-table tr { display:grid; grid-template-columns:300px minmax(0,1fr); gap:26px; align-items:center; }
+    .publication-table td { width:auto!important; padding:0; }
+    .publication-table { margin:28px 0 34px; }
+    .publication-table td:first-child { height:210px; display:flex; align-items:center; justify-content:center; background:#f6f8fa; border:1px solid #edf0f3; border-radius:12px; overflow:hidden; }
+    .paper-media { width:100%; height:100%; object-fit:contain; border-radius:0; box-shadow:none; }
+    .project-media { max-height:150px; width:auto; }
+    .publication-table td:last-child { font-size:14px; line-height:1.5; }
+    .publication-table td p { font-size:14px!important; margin:8px 0 0!important; color:#66717e; }
+    .publication-table papertitle { font-size:17px; line-height:1.35; }
+    .publication-table td > a + br { display:initial; }
+    .publication-table td > a { margin-bottom:7px; }
+    .publication-table td > a img { height:28px!important; }
+    .paired-media { width:100%; height:100%; display:grid; grid-template-columns:1fr 1fr; gap:2px; background:#edf0f3; }
+    .paired-media figure { margin:0; background:#fff; display:flex; flex-direction:column; justify-content:center; min-width:0; }
+    .paired-media video { width:100%; height:170px; object-fit:contain; }
+    .paired-media figcaption { text-align:center; color:#7a8591; font-size:11px; text-transform:uppercase; letter-spacing:1px; }
+    .research-keywords { display:flex; flex-wrap:wrap; gap:8px; margin:32px 0 0; }
+    .research-keywords span { border:1px solid #dce5ed; border-radius:20px; padding:5px 12px; color:#426078; font-size:13px; background:#f7fafc; }
+    .star-badge { display:inline-flex; vertical-align:middle; margin:8px 0 0 4px; }
+    .star-badge img { height:20px; }
+    .internship { display:flex; align-items:center; gap:24px; padding:20px 0; }
+    .internship img { width:64px; height:64px; object-fit:contain; border-radius:14px; }
+    .internship p { margin:4px 0; } .internship time { color:#7b8591; font-size:14px; }
+    @media(max-width:650px) { body{padding:18px;} .publication-table tr {grid-template-columns:1fr;gap:16px;} .publication-table td:first-child{height:220px;} .publication-table{margin-bottom:36px;} .paired-media video{height:185px;} }
   </style>
 </head>
 
@@ -49,13 +74,16 @@
           </p>
         </td>
         <td style="width:35%; text-align:right; vertical-align:middle;">
-          <img src="Jingzhong Lin_files\me\green-spring-coat.jpg" class="profile-photo" alt="Jingzhong Lin">
+          <img src="Jingzhong Lin_files/me/green-spring-coat.jpg" class="profile-photo" alt="Jingzhong Lin">
         </td>
       </tr>
     </tbody>
   </table>
 
-  <heading>Publications</heading>
+  <div class="research-keywords" aria-label="Research interests"><span>Human Motion</span><span>Camera Motion &amp; Control</span><span>Video Generation</span><span>Agentic Systems</span></div>
+<heading>Publications</heading>
+<table class="publication-table"><tbody><tr><td><div class="paired-media"><figure><video autoplay loop muted playsinline preload="metadata" src="Jingzhong Lin_files/resources/AESOP_global.mp4"></video><figcaption>global</figcaption></figure><figure><video autoplay loop muted playsinline preload="metadata" src="Jingzhong Lin_files/resources/AESOP_projection.mp4"></video><figcaption>projection</figcaption></figure></div></td><td><a href="./AESOP/"><papertitle>AESOP: Asymmetric Human–Camera Generation with Translation-Intensity Control</papertitle></a><br><strong>Jingzhong Lin</strong>, Zhanke Wang, Heng Li, Wenxiang Liu, Zhao Zhang, Kecheng Tang, Dongdong Xiang, Changbo Wang, Di Kang, Chunchao Guo, Linchao Bao, Gaoqi He<br><em>arXiv</em>, 2026<br><div class="box"><a href="./AESOP/">Project</a></div><div class="box"><a href="https://github.com/RipeMangoBox/AESOP">Code</a></div><div class="box"><a href="https://arxiv.org/abs/2609.37229">Paper</a></div><a class="star-badge" href="https://github.com/RipeMangoBox/AESOP" aria-label="GitHub stars"><img src="https://img.shields.io/github/stars/RipeMangoBox/AESOP?style=flat&amp;label=stars&amp;cacheSeconds=3600" alt="GitHub stars" loading="lazy"></a><p>Unified human–camera generation with explicit control over camera translation intensity.</p></td></tr></tbody></table>
+<table class="publication-table"><tbody><tr><td><video class="paper-media" autoplay loop muted playsinline preload="metadata" src="Jingzhong Lin_files/resources/FlowHMR.mp4"></video></td><td><a href="https://flowhmr.github.io/"><papertitle>FlowHMR: Physically Plausible Motion Capture from Video</papertitle></a><br>Zhanke Wang, Chengfeng Zhao, Qing Shuai, <strong>Jingzhong Lin</strong>, Heng Li, Zeyu Ling, Yuxin Wen, Jing Li, Di Kang, Chunchao Guo, Linchao Bao<br><em>arXiv</em>, 2026<br><div class="box"><a href="https://flowhmr.github.io/">Project</a></div><div class="box"><a href="https://github.com/flowhmr/flowhmr">Code</a></div><div class="box"><a href="https://arxiv.org/abs/2610.03691">Paper</a></div><a class="star-badge" href="https://github.com/flowhmr/flowhmr" aria-label="GitHub stars"><img src="https://img.shields.io/github/stars/flowhmr/flowhmr?style=flat&amp;label=stars&amp;cacheSeconds=3600" alt="GitHub stars" loading="lazy"></a><p>Flow matching and physics-guided reinforcement learning for plausible human motion capture.</p></td></tr></tbody></table>
   <!-- ReactDance -->
   <table class="publication-table">
     <tbody>
@@ -79,7 +107,7 @@
           <div class="box"><a href="https://github.com/RipeMangoBox/ReactDance"><i class="fa fa-github"></i> Code</a></div>
           <div class="box"><a href="https://openreview.net/forum?id=FvMyAMbbX0"><i class="fa fa-file-pdf-o"></i> Paper</a></div>
           <div class="box"><a href="Jingzhong Lin_files/resources/ReactDance_Poster.pdf" target="_blank"><i class="fa fa-file-pdf-o"></i> Poster</a></div>
-          <p style="font-size: 15px; margin-top: 10px;">ReactDance enables fine-grained duet interaction via hierarchical latent representations and ensures long-term coherence through temporal alignment.</p>
+          <a class="star-badge" href="https://github.com/RipeMangoBox/ReactDance" aria-label="GitHub stars"><img src="https://img.shields.io/github/stars/RipeMangoBox/ReactDance?style=flat&amp;label=stars&amp;cacheSeconds=3600" alt="GitHub stars" loading="lazy"></a><p style="font-size: 15px; margin-top: 10px;">ReactDance enables fine-grained duet interaction via hierarchical latent representations and ensures long-term coherence through temporal alignment.</p>
         </td>
       </tr>
     </tbody>
@@ -96,7 +124,7 @@
           </video>
         </td>
         <td>
-          <!-- <a href="https://github.com/HellAngel18/EmoDiffGes"> -->
+          <a>
             <papertitle>PCMG: Psychology-driven Personality-consistent Text-to-Motion Generation</papertitle>
           </a>
           <br>
@@ -152,7 +180,7 @@
 }</code></pre>
 
           </div>
-          <p style="font-size: 15px; margin-top: 10px;">EmoDiffGes, a diffusion-based framework unifying dynamic emotion conditioning and part-aware synergistic modeling.</p>
+          <a class="star-badge" href="https://github.com/HellAngel18/EmoDiffGes" aria-label="GitHub stars"><img src="https://img.shields.io/github/stars/HellAngel18/EmoDiffGes?style=flat&amp;label=stars&amp;cacheSeconds=3600" alt="GitHub stars" loading="lazy"></a><p style="font-size: 15px; margin-top: 10px;">EmoDiffGes, a diffusion-based framework unifying dynamic emotion conditioning and part-aware synergistic modeling.</p>
         </td>
       </tr>
     </tbody>
@@ -174,7 +202,8 @@
           <em>ACM MM</em>, 2025
           <br>
           <div class="box"><a href="https://dl.acm.org/doi/epdf/10.1145/3746027.3755855"><i class="fa fa-file-pdf-o"></i> Paper</a></div>
-          <div class="box" style="cursor:pointer;" onclick="showBib('ac4au_bib')"><i class="fa fa-quote-left"></i> BibTex</div>
+          <div class="box"><a href="https://github.com/ChambersHarr/AC4AU">Code</a></div>
+<div class="box" style="cursor:pointer;" onclick="showBib('ac4au_bib')"><i class="fa fa-quote-left"></i> BibTex</div>
           
           <div id="ac4au_bib" style="display:none; margin-top: 10px; font-size: 11px; background: #f4f4f4; padding: 10px;">
             <pre><code>@inproceedings{10.1145/3746027.3755855,
@@ -184,7 +213,7 @@
   booktitle = {ACM MM}
 }</code></pre>
           </div>
-          <p style="font-size: 15px; margin-top: 10px;">Ac4AU, an apex-free network for action unit detection that addresses data leakage concerns raised in CD6ME and eliminates the need for manually annotated apex frames.</p>
+          <a class="star-badge" href="https://github.com/ChambersHarr/AC4AU" aria-label="GitHub stars"><img src="https://img.shields.io/github/stars/ChambersHarr/AC4AU?style=flat&amp;label=stars&amp;cacheSeconds=3600" alt="GitHub stars" loading="lazy"></a><p style="font-size: 15px; margin-top: 10px;">Ac4AU, an apex-free network for action unit detection that addresses data leakage concerns raised in CD6ME and eliminates the need for manually annotated apex frames.</p>
         </td>
       </tr>
     </tbody>
@@ -208,7 +237,7 @@
           <div class="box"><a href="https://github.com/RipeMangoBox/BITE" target="_blank" rel="noopener"><i class="fa fa-github"></i> Repository</a></div>
           <div class="box"><a href="https://github.com/RipeMangoBox/BITE" target="_blank" rel="noopener"><i class="fa fa-book"></i> Docs (ZH)</a></div>
           <div class="box"><a href="https://huggingface.co/datasets/RipeMangoBox/PaperBite-Assets" target="_blank" rel="noopener"><i class="fa fa-database"></i> PaperBite Assets</a></div>
-          <p style="font-size: 15px; margin-top: 10px;">BITE is an open-source local-first workflow for structured paper analysis, research memory, and knowledge-grounded research agents.</p>
+          <a class="star-badge" href="https://github.com/RipeMangoBox/BITE" aria-label="GitHub stars"><img src="https://img.shields.io/github/stars/RipeMangoBox/BITE?style=flat&amp;label=stars&amp;cacheSeconds=3600" alt="GitHub stars" loading="lazy"></a><p style="font-size: 15px; margin-top: 10px;">BITE is an open-source local-first workflow for structured paper analysis, research memory, and knowledge-grounded research agents.</p>
         </td>
       </tr>
     </tbody>
@@ -217,10 +246,11 @@
   <heading>Academic Service</heading>
   <div class="service-item">
     <p>
-      <strong>Reviewer for:</strong> ICCV, CVPR, AAAI, NeurIPS.
+      <strong>Reviewer for:</strong> ICCV, CVPR, AAAI, NeurIPS, ICML, ICLR.
     </p>
   </div>
   
+  <heading>Internship Experience</heading><div class="internship"><img src="Jingzhong Lin_files/resources/hunyuan.png" alt="Tencent Hunyuan"><div><strong>Tencent Hunyuan · 腾讯混元</strong><p>Research Intern</p><time>July 2026 – Present</time></div></div>
   <hr style="margin-top: 50px; border: 0; border-top: 1px solid #eee;">
   <p style="text-align: right; font-size: 14px; color: #3e3e3e;">
     Template adapted from <a href="https://zkf1997.github.io/" target="_blank">Kaifeng Zhao</a>'s website.
