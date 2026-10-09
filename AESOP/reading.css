@@ -28,6 +28,6 @@ body.layout-left{padding-top:0;padding-left:230px}.layout-left .nav{inset:0 auto
 .film-frame::before{top:1.5px;}.film-frame::after{bottom:1.5px;}
 .gallery .video-cell .film-frame video{border:0;border-radius:0;}
 
-/* Aperture replaces O at the same optical scale as the title letters. */
+/* Align the aperture body to the cap height and baseline; dots extend above. */
 .hero .aesop-title{display:flex;align-items:baseline;justify-content:center;gap:0}
-.hero .aesop-title-icon{display:inline-block;width:.86em;height:.86em;object-fit:contain;align-self:center;margin:0 .015em 0 .025em;transform:translateY(.025em)}
+.hero .aesop-title-icon{display:inline-block;width:.94em;height:.94em;object-fit:contain;align-self:baseline;margin:0 .015em 0 .025em;transform:translateY(.065em)}
